@@ -7,29 +7,23 @@ Use este roteiro na véspera ou no bloco de deploy do dia 1.
 - [ ] Conta GitHub criada e logada no navegador
 - [ ] Conta Render criada ([https://render.com](https://render.com)) com o mesmo GitHub conectado (Authorize)
 
-## 2. Repositório Git local
+## 2. Repositório Git
 
-Na pasta do projeto:
+Repo já publicado:
+
+**https://github.com/thaelenlima/encomp-agenda**
+
+Para atualizar depois de mudanças locais:
 
 ```powershell
 cd C:\Users\thael\Documents\dev\encomp
-git status
+git add .
+git commit -m "sua mensagem"
+git push
 ```
 
-Se ainda não houver remote:
-
-1. No GitHub: **New repository** (ex.: `encomp-agenda`), público ou privado.
-2. Não marque "Add README" se o projeto local já tem arquivos.
-3. No terminal:
-
-```powershell
-git remote add origin https://github.com/SEU-USUARIO/encomp-agenda.git
-git branch -M main
-git push -u origin main
-```
-
-- [ ] Código no GitHub (incluindo `backend/`, `frontend/`, `docs/`)
-- [ ] `node_modules/` **não** está no remoto (confira no site do GitHub)
+- [x] Código no GitHub (incluindo `backend/`, `frontend/`, `docs/`)
+- [ ] Confirme no site que `node_modules/` **não** aparece no remoto
 
 ## 3. Web Service no Render
 
