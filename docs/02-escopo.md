@@ -17,13 +17,15 @@ Front e back separados. No dia 1 sobe só o `backend`. No dia 2 o `frontend` con
 |--------|---------|--------|
 | Runtime | Node.js (LTS) | Padrão de mercado, fácil de instalar |
 | Framework API | Express | Poucas linhas, documentação abundante |
-| Persistência | Arquivo JSON (`data/eventos.json`) | Zero setup de banco; deploy simples; fácil de inspecionar |
+| Persistência | SQLite (`data/agenda.db` via `better-sqlite3`) | Banco local real; SQL na aula; um arquivo, sem servidor de DB |
 | Cliente HTTP (aula) | Thunder Client (VS Code) ou Insomnia | Testar API antes do front |
 | Frontend | HTML + CSS + JS (sem bundler) | Cabe em 4h; `fetch` nativo |
 | Deploy API | Render (Web Service) | Free tier, deploy por GitHub, variáveis de ambiente |
 | Hospedagem front (opcional) | GitHub Pages ou abrir `index.html` local apontando para a API | Evita complicar o dia 2 |
 
-Persistência em JSON (não SQLite) para não gastar tempo com drivers nativos no Windows/Linux da turma e no build do Render.
+SQLite via `better-sqlite3`: ensina SQL sem instalar Postgres/MySQL. O arquivo `.db` fica em `backend/data/` (gitignored). No Render free o disco continua efêmero (dados podem resetar após sleep/redeploy).
+
+**Atenção na turma (Windows):** `better-sqlite3` compila nativo. Se `npm install` falhar, instalar [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) (workload “Desktop development with C++”) ou usar Node LTS com binários pré-compilados da lib.
 
 ## O que ENTRA
 
@@ -35,7 +37,7 @@ Persistência em JSON (não SQLite) para não gastar tempo com drivers nativos n
 - Respostas JSON e status HTTP corretos (200, 201, 400, 404)
 - CORS liberado
 - `PORT` via variável de ambiente
-- Persistência em arquivo JSON
+- Persistência em SQLite (tabela `eventos`)
 - Deploy no Render
 - README com URL base
 

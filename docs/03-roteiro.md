@@ -12,7 +12,7 @@ Instrutor prepara:
 - [ ] Conta Render pronta + app de teste já linkado uma vez (para antecipar surpresas)
 - [ ] Slides curtos (máx. 8–10) só de conceitos HTTP/REST
 - [ ] Snippets de referência (não entregar o projeto pronto)
-- [ ] Seed de 2–3 eventos de exemplo para colar no JSON
+- [ ] Seed de 2–3 eventos (já no `db.js` na primeira execução)
 
 Aluno precisa ter:
 
@@ -44,15 +44,14 @@ Aluno precisa ter:
 
 **Saída:** servidor local respondendo.
 
-### Bloco 3 — Modelo + leitura (0:45–1:25)
+### Bloco 3 — Modelo + SQLite + leitura (0:45–1:25)
 
 - Definir o recurso `evento` e os campos (ver [04-modelo-api.md](04-modelo-api.md))
-- Criar `data/eventos.json` com array seed
-- Helper de leitura/escrita do arquivo
-- `GET /eventos` (lista)
-- `GET /eventos/:id` (404 se não achar)
+- Instalar `better-sqlite3` e criar `db.js` (tabela `eventos` + seed se vazia)
+- Mostrar o arquivo `data/agenda.db` gerado
+- `GET /eventos` e `GET /eventos/:id` com `SELECT` (404 se não achar)
 
-**Saída:** API lê dados persistidos.
+**Saída:** API lê dados do banco local.
 
 ### Bloco 4 — Criação + validação (1:25–2:05)
 
@@ -61,7 +60,7 @@ Aluno precisa ter:
 - Gerar `id` (timestamp ou uuid simples)
 - Status padrão `agendado`
 - Responder 201 + recurso criado
-- Recarregar o JSON e mostrar que persistiu
+- Consultar de novo no Thunder Client e mostrar que persistiu no SQLite
 
 **Saída:** criação funcionando de ponta a ponta.
 

@@ -1,19 +1,8 @@
 const express = require("express");
-const fs = require("fs");
-const path = require("path");
+const db = require("../db");
 
 const router = express.Router();
-const DATA_PATH = path.join(__dirname, "..", "data", "eventos.json");
 const STATUS_VALIDOS = ["agendado", "em_andamento", "concluido", "cancelado"];
-
-function lerEventos() {
-  const raw = fs.readFileSync(DATA_PATH, "utf8");
-  return JSON.parse(raw);
-}
-
-function salvarEventos(eventos) {
-  fs.writeFileSync(DATA_PATH, JSON.stringify(eventos, null, 2), "utf8");
-}
 
 function validarBody(body) {
   const titulo = typeof body.titulo === "string" ? body.titulo.trim() : "";
@@ -44,13 +33,16 @@ function validarBody(body) {
 }
 
 router.get("/", (req, res) => {
-  const eventos = lerEventos();
+  const eventos = db
+    .prepare("SELECT id, titulo, data, local, status, descricao FROM eventos ORDER BY data, titulo")
+    .all();
   res.json(eventos);
 });
 
 router.get("/:id", (req, res) => {
-  const eventos = lerEventos();
-  const evento = eventos.find((item) => item.id === req.params.id);
+  const evento = db
+    .prepare("SELECT id, titulo, data, local, status, descricao FROM eventos WHERE id = ?")
+    .get(req.params.id);
 
   if (!evento) {
     return res.status(404).json({ erro: "Evento não encontrado" });
@@ -65,22 +57,25 @@ router.post("/", (req, res) => {
     return res.status(400).json({ erro: resultado.erro });
   }
 
-  const eventos = lerEventos();
   const novo = {
     id: String(Date.now()),
     ...resultado.dados,
   };
 
-  eventos.push(novo);
-  salvarEventos(eventos);
+  db.prepare(`
+    INSERT INTO eventos (id, titulo, data, local, status, descricao)
+    VALUES (@id, @titulo, @data, @local, @status, @descricao)
+  `).run(novo);
+
   res.status(201).json(novo);
 });
 
 router.put("/:id", (req, res) => {
-  const eventos = lerEventos();
-  const indice = eventos.findIndex((item) => item.id === req.params.id);
+  const existente = db
+    .prepare("SELECT id FROM eventos WHERE id = ?")
+    .get(req.params.id);
 
-  if (indice === -1) {
+  if (!existente) {
     return res.status(404).json({ erro: "Evento não encontrado" });
   }
 
@@ -90,25 +85,27 @@ router.put("/:id", (req, res) => {
   }
 
   const atualizado = {
-    id: eventos[indice].id,
+    id: existente.id,
     ...resultado.dados,
   };
 
-  eventos[indice] = atualizado;
-  salvarEventos(eventos);
+  db.prepare(`
+    UPDATE eventos
+    SET titulo = @titulo, data = @data, local = @local,
+        status = @status, descricao = @descricao
+    WHERE id = @id
+  `).run(atualizado);
+
   res.json(atualizado);
 });
 
 router.delete("/:id", (req, res) => {
-  const eventos = lerEventos();
-  const indice = eventos.findIndex((item) => item.id === req.params.id);
+  const info = db.prepare("DELETE FROM eventos WHERE id = ?").run(req.params.id);
 
-  if (indice === -1) {
+  if (info.changes === 0) {
     return res.status(404).json({ erro: "Evento não encontrado" });
   }
 
-  eventos.splice(indice, 1);
-  salvarEventos(eventos);
   res.status(204).send();
 });
 

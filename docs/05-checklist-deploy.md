@@ -75,7 +75,7 @@ const API_BASE = "https://SUA-URL.onrender.com";
 | App cai ao subir | Start Command = `npm start`; logs no Render |
 | `GET` local ok, nuvem 404 | URL sem barra no fim errada; caminho `/eventos` |
 | Front: CORS / Failed to fetch | API no ar? Render free “dorme” após ~15 min; espere 30–60s e tente de novo |
-| Dados sumiram | Disco efêmero no free: sleep/redeploy reinicia o JSON (normal na aula) |
+| Dados sumiram | Disco efêmero no free: sleep/redeploy recria o SQLite com o seed (normal na aula) |
 | Cold start lento | Primeira request após sleep pode demorar; avise a turma |
 
 ## Plano B (só instrutor)

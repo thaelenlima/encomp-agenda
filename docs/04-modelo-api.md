@@ -30,28 +30,11 @@ Todas as respostas de sucesso/erro em JSON, exceto `DELETE` que pode retornar 20
 }
 ```
 
-### Seed sugerido (`data/eventos.json`)
+### Persistência
 
-```json
-[
-  {
-    "id": "1",
-    "titulo": "Abertura do evento",
-    "data": "2026-10-23",
-    "local": "Auditório",
-    "status": "agendado",
-    "descricao": "Boas-vindas e agenda do dia"
-  },
-  {
-    "id": "2",
-    "titulo": "Minicurso de Frontend",
-    "data": "2026-10-24",
-    "local": "Lab 1",
-    "status": "agendado",
-    "descricao": "Consumindo a API com HTML, CSS e JS"
-  }
-]
-```
+Tabela SQLite `eventos` em `backend/data/agenda.db` (criada por `db.js`).
+
+Seed automático na primeira execução (se a tabela estiver vazia): abertura do evento + minicurso de frontend.
 
 ---
 

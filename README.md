@@ -2,7 +2,7 @@
 
 Projeto didático para dois minicursos:
 
-1. **Backend (3h30):** API REST em Node.js + Express, persistência em JSON, deploy no Render.
+1. **Backend (3h30):** API REST em Node.js + Express, persistência em SQLite, deploy no Render.
 2. **Frontend (4h):** HTML + CSS + JS vanilla consumindo a API.
 
 ## Estrutura

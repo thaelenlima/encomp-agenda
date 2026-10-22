@@ -1,6 +1,6 @@
 # Backend — ENCOMP Agenda API
 
-API REST de eventos (Node.js + Express + JSON).
+API REST de eventos (Node.js + Express + SQLite).
 
 ## Rodar local
 
@@ -42,4 +42,6 @@ URL base (preencher após o deploy):
 https://SEU-SERVICO.onrender.com
 ```
 
-No plano gratuito do Render o disco é efêmero: dados do JSON podem resetar após sleep/redeploy. Para a aula isso é aceitável.
+Persistência: SQLite em `data/agenda.db` (criado automaticamente; não versionar o `.db`).
+
+No plano gratuito do Render o disco é efêmero: o banco pode resetar após sleep/redeploy (o seed roda de novo). Para a aula isso é aceitável.
